@@ -31,35 +31,83 @@ private:
 			pos.first += 10;
 	}
 
+	void restore_position() {
+		if (pos.first == 0) {
+			if (pos.second != 0) {
+				pos.first = img.cols - 10;
+				pos.second -= 20;
+			}
+		}
+		else {
+			pos.first -= 10;
+		}
+		PrintRect();
+	}
+
+	void Up() {
+		if (pos.second != 0)
+			pos.second -= 20;
+	}
+
+	void Down() {
+		if (pos.second != img.rows - 20)
+			pos.second += 20;
+	}
+
+	void Left() {
+		if (pos.first != 0)
+			pos.first -= 10;
+	}
+
+	void Right() {
+		if (pos.first != img.cols - 10)
+			pos.first += 10;
+	}
+
 	void Print(char num) {
+		std::cout << int(num) << std::endl;
+		bool action = false;
 		if (num == '0')
-			PrintNull();
+			action = PrintNull();
 		else if (num == '1')
-			PrintOne();
+			action = PrintOne();
 		else if (num == '2')
-			PrintTwo();
+			action = PrintTwo();
 		else if (num == '3')
-			PrintThree();
+			action = PrintThree();
 		else if (num == '4')
-			PrintFour();
+			action = PrintFour();
 		else if (num == '5')
-			PrintFive();
+			action = PrintFive();
 		else if (num == '6')
-			PrintSix();
+			action = PrintSix();
 		else if (num == '7')
-			PrintSeven();
+			action = PrintSeven();
 		else if (num == '8')
-			PrintEight();
+			action = PrintEight();
 		else if (num == '9')
-			PrintNine();
+			action = PrintNine();
+		else if (num == ' ')
+			action = true;
+		else if (num == 'w')
+			Up();
+		else if (num == 's')
+			Down();
+		else if (num == 'a')
+			Left();
+		else if (num == 'd')
+			Right();
 		else if( num == 'c'){
 			clear();
 			return;
 		}
-		set_position();
+		else if (num == 8)
+			restore_position();
+		if(action)
+			set_position();
 	}
 	
-	void PrintNull() {
+	bool PrintNull() {
 		for (int x = pos.first+1; x < pos.first + 9; x++) {
 			img[pos.second+1][x] = T(255);
 			img[pos.second + 18][x] = T(255);
@@ -69,14 +117,16 @@ private:
 			img[y][pos.first + 8] = T(255);
 		}
 		img[pos.second + 9][pos.first + 4] = T(255);
+		return true;
 	}
 
-	void PrintOne() {
+	bool PrintOne() {
 		for (int y = pos.second + 1; y < pos.second + 19; y++)
 			img[y][pos.first + 4] = T(255);
+		return true;
 	}
 
-	void PrintTwo() {
+	bool PrintTwo() {
 		for (int x = pos.first + 1; x < pos.first + 7; x++) {
 			img[pos.second + 1][x] = T(255);
 			img[pos.second + 10][x] = T(255);
@@ -89,9 +139,10 @@ private:
 			else
 				img[y][pos.first + 1] = T(255);
 		}
+		return true;
 	}
 
-	void PrintThree() {
+	bool PrintThree() {
 		for (int x = pos.first + 2; x < pos.first + 8; x++) {
 			img[pos.second + 1][x] = T(255);
 			img[pos.second + 10][x] = T(255);
@@ -99,9 +150,10 @@ private:
 		}
 		for (int y = pos.second + 1; y < pos.second + 19; y++)
 			img[y][pos.first + 7] = T(255);
+		return true;
 	}
 
-	void PrintFour() {
+	bool PrintFour() {
 		for (int x = pos.first + 1; x < pos.first + 8; x++)
 			img[pos.second + 10][x] = T(255);
 
@@ -110,9 +162,10 @@ private:
 			if (y < pos.second + 10)
 				img[y][pos.first + 1] = T(255);
 		}
+		return true;
 	}
 
-	void PrintFive() {
+	bool PrintFive() {
 		for (int x = pos.first + 2; x < pos.first + 8; x++) {
 			img[pos.second + 1][x] = T(255);
 			img[pos.second + 10][x] = T(255);
@@ -124,9 +177,10 @@ private:
 			else
 				img[y][pos.first + 7] = T(255);
 		}
+		return true;
 	}
 
-	void PrintSix() {
+	bool PrintSix() {
 		for (int x = pos.first + 1; x < pos.first + 8; x++) {
 			img[pos.second + 1][x] = T(255);
 			img[pos.second + 10][x] = T(255);
@@ -137,17 +191,19 @@ private:
 			if (y > pos.second + 11)
 				img[y][pos.first + 7] = T(255);
 		}
+		return true;
 	}
 
-	void PrintSeven() {
+	bool PrintSeven() {
 		for (int x = pos.first + 1; x < pos.first + 8; x++)
 			img[pos.second + 1][x] = T(255);
 		
 		for (int y = pos.second + 1; y < pos.second + 19; y++)
 			img[y][pos.first + 7] = T(255);
+		return true;
 	}
 
-	void PrintEight() {
+	bool PrintEight() {
 		for (int x = pos.first + 1; x < pos.first + 9; x++) {
 			img[pos.second + 1][x] = T(255);
 			img[pos.second + 10][x] = T(255);
@@ -157,9 +213,10 @@ private:
 			img[y][pos.first + 1] = T(255);
 			img[y][pos.first + 8] = T(255);
 		}
+		return true;
 	}
 
-	void PrintNine() {
+	bool PrintNine() {
 		for (int x = pos.first + 1; x < pos.first + 9; x++) {
 			img[pos.second + 1][x] = T(255);
 			img[pos.second + 10][x] = T(255);
@@ -170,11 +227,12 @@ private:
 			if(y < pos.second + 11)
 				img[y][pos.first + 1] = T(255);
 		}
+		return true;
 	}
 	void PrintRect() {
 		for (int i = pos.second; i < pos.second + 20; i++) {
 			for (int j = pos.first; j < pos.first + 10; j++) {
-				img[i][j] = T(255);
+				img[i][j] = T(0);
 			}
 		}
 	}
