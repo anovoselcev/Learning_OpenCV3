@@ -20,3 +20,5 @@ This volume covers the entire library, in its modern C++ implementation, includi
  - Track objects and motion through the visual field
  - Reconstruct 3D images from stereo vision
  - Discover basic and advanced machine learning techniques in OpenCV
+
+[Code samples](https://github.com/oreillymedia/Learning-OpenCV-3_examples/archive/master/)
