@@ -4,7 +4,8 @@
 int main() {
 	auto img = cv::imread("../../image3.png");
 	cv::namedWindow("Window");
-	cv::setMouseCallback("Window", [](int event,
+	cv::setMouseCallback("Window", [](
+		int event,
 		int x, int y,
 		int flags,
 		void* userdata)
