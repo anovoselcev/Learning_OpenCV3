@@ -1,18 +1,18 @@
 ﻿#include <opencv2/opencv.hpp>
 #include <iostream>
 
-class MultyTracbar{
+class MulltyTrackbar{
 public:
 
-	MultyTracbar() = default;
+	MulltyTrackbar() = default;
 
-	MultyTracbar(std::string name){
+	MulltyTrackbar(std::string name){
 		cap_.open(name);
 	}
 
 	void Run(){
-		cv::createTrackbar("Position", "Window", &pos_one_, cap_.get(cv::CAP_PROP_FRAME_COUNT) / 10, &MultyTracbar::TrackEvent1, this);
-		cv::createTrackbar("Pause", "Window", &pos_second, 1, &MultyTracbar::TrackEvent2, this);
+		cv::createTrackbar("Position", "Window", &pos_one_, cap_.get(cv::CAP_PROP_FRAME_COUNT) / 10, &MulltyTrackbar::TrackEventPosition, this);
+		cv::createTrackbar("Pause", "Window", &pos_second, 1, &MulltyTrackbar::TrackEventPause, this);
 		cv::Mat img;
 		for (;;) {
 			if (!discret_second && cap_.get(cv::CAP_PROP_FRAME_COUNT) > cap_.get(cv::CAP_PROP_POS_FRAMES)) {
@@ -27,16 +27,16 @@ public:
 		cap_.release();
 	}
 
-	static void TrackEvent1(int pos, void* ptr){
-		auto sample = static_cast<MultyTracbar*>(ptr);
+	static void TrackEventPosition(int pos, void* ptr){
+		auto sample = static_cast<MulltyTrackbar*>(ptr);
 		if (sample->GetCapture().get(cv::CAP_PROP_FRAME_COUNT) > pos * 10) {
 			sample->GetCapture().set(cv::CAP_PROP_POS_FRAMES, pos * 10);
 			sample->GetDiscretOne() = pos;
 		}
 	}
 
-	static void TrackEvent2(int pos, void* ptr){
-		auto sample = static_cast<MultyTracbar*>(ptr);
+	static void TrackEventPause(int pos, void* ptr){
+		auto sample = static_cast<MulltyTrackbar*>(ptr);
 		sample->GetDiscretSecond() = pos;
 	}
 
@@ -61,7 +61,7 @@ protected:
 
 int main() {
 	cv::namedWindow("Window");
-	MultyTracbar mt("../../video1.mp4");
+	MulltyTrackbar mt("../../video1.mp4");
 	mt.Run();
 	
 	return 0;
